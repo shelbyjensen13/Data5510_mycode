@@ -20,19 +20,19 @@ import json
 # REMEMBER, The outer loop handles states; the inner loops handle that state's COVID records.
 
 # CSV SECTION
-populations = {}
+populations = {} # empty list
 
-with open("states.csv", "r") as file:
+with open("states.csv", "r") as file: # reading in the csv
     reader = csv.DictReader(file)
 
     for row in reader:
-        state = row["STATE_ABBREV"]
-        population = int(row["POPULATION"])
+        state = row["STATE_ABBREV"] # creating the states variable
+        population = int(row["POPULATION"]) # creating the pop variable ang making it an int
 
         populations[state] = population 
 
 # STATE NAME DICTIONARY
-state_names = {
+state_names = { # going from abbrev to full names for output
     "AL": "Alabama",
     "AK": "Alaska",
     "AZ": "Arizona",
@@ -107,7 +107,7 @@ lowest_cases_low = None
 lowest_population = None
 
 # LOOP THROUGH EACH STATE
-for state, population in populations.items():
+for state, population in populations.items(): # starting loop that'll loop for each state
 
     state_name = state_names[state]
 
@@ -122,16 +122,16 @@ for state, population in populations.items():
 
     # SAVE RAW JSON DATA
     with open(f"{state}.json", "w") as file:
-        json.dump(data, file, indent=4)
+        json.dump(data, file, indent=4) # making the string readable
 
     # AVERAGE CALCULATION
-    weekly_cases = []
+    weekly_cases = [] # empty list
 
     for record in data:
-        cases = float(record["new_cases"])
+        cases = float(record["new_cases"]) # creating case variable
         weekly_cases.append(cases)
 
-    average_cases = sum(weekly_cases) / len(weekly_cases)
+    average_cases = sum(weekly_cases) / len(weekly_cases) # calculation
 
 
     # WEEK WITH HIGHEST # OF CASES
@@ -154,12 +154,12 @@ for state, population in populations.items():
     for record in data:
         date = datetime.strptime(record["end_date"][:10], "%Y-%m-%d")
         month_year = date.strftime("%B %Y")
-        cases = float(record["new_cases"])
+        cases = float(record["new_cases"]) # cleaning up the output
 
         if month_year not in monthly_cases:
             monthly_cases[month_year]= 0 
 
-        monthly_cases[month_year] += cases
+        monthly_cases[month_year] += cases # calculation 
 
 # print each month's total 
     highest_month = max(monthly_cases, key=monthly_cases.get)
@@ -244,4 +244,6 @@ print(
     lowest_month_low + " (" +
     str(int(lowest_cases_low)) + " cases; Population: " +
     str(lowest_population) + ")"
-)
+) # printing format that matches the example
+
+# https://chatgpt.com/share/6ac01296-1784-83ea-a6c5-ce3d9289d43a chat link
