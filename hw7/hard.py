@@ -17,3 +17,7 @@ process and how you would address them. '''
 # search tree rules after the node is removed. We'd handle them by returning the updated
 # root of the tree, leaving the tree unchanged if the value is not found, and carefully
 # reconnecting the remaining nodes after deletion. 
+
+
+
+# https://chatgpt.com/share/6aebc639-02d4-83e9-8aa7-12795faadfd2 
